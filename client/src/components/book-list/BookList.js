@@ -1,6 +1,8 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { gql } from "apollo-boost";
 import {useQuery} from "@apollo/react-hooks"
+import BookListItem from "../book-list-item/BookListItem"
+import AddBook from "../add-book/AddBooks"
 
 const getBooksQuery = gql`
   {
@@ -12,13 +14,26 @@ const getBooksQuery = gql`
 `;
 
 const BookList = () => {
-    const {loading, error, data} = useQuery(getBooksQuery)
-    console.log(data)
+  const [books, setBooks] = useState([])
+  const {loading, error, data} = useQuery(getBooksQuery)
+  
+ useEffect(() => {
+  if(!loading) {
+    setBooks(data.books)
+  }
+ }, [loading])
+
+ console.log(books)
   return (
     <div id="main">
       <ul id="book-list">
-        <li>Book name</li>
+        {books.length ?(
+          books.map(item => <BookListItem key={item.id} {...item}/>)
+        ) : <div>Loading...</div>
+        }
+        
       </ul>
+      <AddBook/>
     </div>
   );
 };
