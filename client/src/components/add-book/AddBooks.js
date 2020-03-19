@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from "react";
 import { gql } from "apollo-boost";
-import {useQuery} from "@apollo/react-hooks"
-
+import { useQuery } from "@apollo/react-hooks";
 
 const getAuthorsQuery = gql`
   {
@@ -12,19 +11,48 @@ const getAuthorsQuery = gql`
   }
 `;
 
- const AddBooks = () =>{
-    const [authors, setAuthors] = useState([])
-    const {loading, error, data} = useQuery(getAuthorsQuery)
-    
-   useEffect(() => {
-    if(!loading) {
-        setAuthors(data.authors)
-        console.log(data)
+const AddBooks = () => {
+  const [authors, setAuthors] = useState([]);
+  const { loading, error, data } = useQuery(getAuthorsQuery);
+
+  useEffect(() => {
+    if (!loading) {
+      setAuthors(data.authors);
+      console.log(data);
     }
-   }, [loading])
-     return(
-         <form>hi</form>
-     )
- }
- 
- export default AddBooks;
+  }, [loading]);
+
+  const displayAuthors = () => {
+    if (!authors.length) {
+    return <option>Loading authors...</option>
+    } else {
+      return authors.map(author => (
+        <option key={author.id} value={author.id}>
+          {author.name}
+        </option>
+      ));
+    }
+  };
+  return (
+    <form id="add-book">
+      <div className="field">
+        <label>Book name:</label>
+        <input type="text" />
+      </div>
+      <div className="field">
+        <label>Genre:</label>
+        <input type="text" />
+      </div>
+      <div className="field">
+        <label>Author:</label>
+        <select>
+          <option>Select author</option>
+          {displayAuthors()}
+        </select>
+      </div>
+      <button>+</button>
+    </form>
+  );
+};
+
+export default AddBooks;
