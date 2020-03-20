@@ -48,7 +48,6 @@ const AddBooks = () => {
   const handleSubmit =  e => {
     e.preventDefault();
     if (bookName && genre && authorId) {
-      console.log("HERE", bookName, genre, authorId)
        addBook({
         variables: { name: bookName, genre, authorId: authorId },
         refetchQueries: [{query: getBooksQuery}]
