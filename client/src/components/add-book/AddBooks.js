@@ -11,11 +11,10 @@ const AddBooks = () => {
   const { loading, error, data } = useQuery(getAuthorsQuery);
   const [addBook] = useMutation(addBookMutation);
 
-  console.log("data", data);
+
   useEffect(() => {
     if (!loading) {
       setAuthors(data.authors);
-      console.log(data);
     }
   }, [loading]);
 
