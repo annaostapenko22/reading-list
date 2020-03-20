@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { getBooksQuery } from "../../queries/queries";
 import BookListItem from "../book-list-item/BookListItem";
-import BookDetaild from "../book-details/BookDetails";
 import BookDetails from "../book-details/BookDetails";
+import styles from "./BookList.module.css"
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -14,7 +14,7 @@ const BookList = () => {
     if (!loading) {
       setBooks(data.books);
     }
-  }, [loading]);
+  }, [loading, data]);
 
   const getSelectedBookId = id => {
     setSeletedId(id);
@@ -24,7 +24,7 @@ const BookList = () => {
 
   return (
     <div id="main">
-      <ul id="book-list">
+      <ul className={styles.bookList}>
         {books.length ? (
           books.map(item => (
             <BookListItem

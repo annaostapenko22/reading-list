@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { getBookQuery } from "../../queries/queries";
+import styles from "./BookDetails.module.css";
 
 const BookDetails = ({ bookId }) => {
   const [book, setBook] = useState(null);
@@ -34,7 +35,6 @@ const BookDetails = ({ bookId }) => {
     }
   };
 
-  console.log("HERE DATA", book);
-  return <div id="book-details">{displayBookDetails()}</div>;
+  return <div className={styles.bookDetails}>{displayBookDetails()}</div>;
 };
 export default BookDetails;

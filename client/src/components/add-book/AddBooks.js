@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { getAuthorsQuery, addBookMutation, getBooksQuery } from "../../queries/queries";
-
+import styles from "./AddBook.module.css"
 const AddBooks = () => {
   const [authors, setAuthors] = useState([]);
   const [bookName, setBookName] = useState("");
@@ -45,22 +45,22 @@ const AddBooks = () => {
     }
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit =  e => {
     e.preventDefault();
     if (bookName && genre && authorId) {
-      console.log("here=>", bookName, genre, authorId);
-      await addBook({
+      console.log("HERE", bookName, genre, authorId)
+       addBook({
         variables: { name: bookName, genre, authorId: authorId },
         refetchQueries: [{query: getBooksQuery}]
       });
-      setBookName("");
-      setGenre("");
-      setAuthorId("");
+       setBookName("");
+       setGenre("");
+       setAuthorId("");
     }
   };
   return (
-    <form id="add-book" onSubmit={handleSubmit}>
-      <div className="field">
+    <form className={styles.form} onSubmit={handleSubmit} >
+      <div className={styles.field}>
         <label>Book name:</label>
         <input
           type="text"
@@ -69,11 +69,11 @@ const AddBooks = () => {
           onChange={handleChange}
         />
       </div>
-      <div className="field">
+      <div className={styles.field}>
         <label>Genre:</label>
         <input type="text" value={genre} name="genre" onChange={handleChange} />
       </div>
-      <div className="field">
+      <div className={styles.field}>
         <label>Author:</label>
         <select onChange={handleChange} name="authorId" value={authorId}>
           <option>Select author</option>
